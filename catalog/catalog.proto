@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "../../catalog/pb";
+
+message Product {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+}
+
+message CreateProductResponse {
+  Product product = 1;
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message GetProductResponse {
+  Product product = 1;
+}
+
+message GetProductsRequest {
+  uint64 skip = 1;
+  uint64 take = 2;
+}
+
+message GetProductsResponse {
+  repeated Product products = 1;
+}
+
+message GetProductsWithIdsRequest {
+  repeated string ids = 1;
+  uint64 skip = 2;
+  uint64 take = 3;
+}
+
+message SearchProductsRequest {
+  string query = 1;
+  uint64 skip = 2;
+  uint64 take = 3;
+}
+
+
+service CatalogService {
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {}
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse) {}
+  rpc GetProducts(GetProductsRequest) returns (GetProductsResponse) {}
+  rpc GetProductsWithIds(GetProductsWithIdsRequest) returns (GetProductsResponse) {}
+  rpc SearchProducts(SearchProductsRequest) returns (GetProductsResponse) {}
+}
